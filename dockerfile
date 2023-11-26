@@ -27,7 +27,7 @@ RUN wget https://mirrors.iu13.net/tdf/libreoffice/stable/7.6.3/rpm/x86_64/LibreO
     cd LibreOffice_7.6.3.2_Linux_x86-64_rpm/RPMS/ && \
     yum localinstall -y *.rpm
 
-ENV PATH=":$PATH/opt/libreoffice7.6/program/"
+ENV PATH="${PATH}:/opt/libreoffice7.6/program/"
 
 WORKDIR /var/task
 
