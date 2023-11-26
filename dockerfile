@@ -26,8 +26,7 @@ RUN wget https://mirrors.iu13.net/tdf/libreoffice/stable/7.6.3/rpm/x86_64/LibreO
     tar -xvf LibreOffice_7.6.3_Linux_x86-64_rpm.tar.gz && \
     cd LibreOffice_7.6.3.2_Linux_x86-64_rpm/RPMS/ && \
     yum localinstall -y *.rpm
-    export PATH=$PATH:/opt/libreoffice7.6/program/
-
+    ENV PATH="/opt/libreoffice7.6/program/:$PATH"
 
 # Create a directory for Miniconda
 RUN mkdir -p ~/miniconda3
