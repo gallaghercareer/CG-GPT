@@ -49,8 +49,8 @@ RUN ~/miniconda3/bin/conda init bash
 RUN ~/miniconda3/bin/pip install --upgrade pip
 
 # Install the specified Python packages
-RUN pip install -r requirements.txt
 RUN pip install --upgrade python-docx
+RUN pip install -r requirements.txt
 
 # Copy function code
 COPY lambda_function.py ${LAMBDA_TASK_ROOT}
