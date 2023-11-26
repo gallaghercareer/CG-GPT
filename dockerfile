@@ -5,7 +5,6 @@ RUN yum update -y && \
     yum install -y \
     gzip \
     tar \
-    libreoffice \
     curl \
     wget \
     gcc \
@@ -14,7 +13,21 @@ RUN yum update -y && \
     libffi-dev \
     libxslt-dev \
     zlib1g-dev \
-     
+    libXinerama \
+    libXext \
+    libXrender \
+    libGL \
+    libcairo2 \
+    cairo \
+    cups-libs
+
+# Download and install LibreOffice
+RUN wget https://mirrors.iu13.net/tdf/libreoffice/stable/7.6.3/rpm/x86_64/LibreOffice_7.6.3_Linux_x86-64_rpm.tar.gz && \
+    tar -xvf LibreOffice_7.6.3_Linux_x86-64_rpm.tar.gz && \
+    cd LibreOffice_7.6.3.2_Linux_x86-64_rpm/RPMS/ && \
+    yum localinstall -y *.rpm
+    export PATH=$PATH:/opt/libreoffice7.6/program/
+
 
 # Create a directory for Miniconda
 RUN mkdir -p ~/miniconda3
@@ -36,11 +49,9 @@ RUN ~/miniconda3/bin/conda init bash
 # Upgrade pip
 RUN ~/miniconda3/bin/pip install --upgrade pip
 
-#Update Python doc-x
-RUNpip install --upgrade python-docx
-
 # Install the specified Python packages
 RUN pip install -r requirements.txt
+RUN pip install --upgrade python-docx
 
 # Copy function code
 COPY lambda_function.py ${LAMBDA_TASK_ROOT}
@@ -48,8 +59,7 @@ COPY lambda_function.py ${LAMBDA_TASK_ROOT}
 # Set the CMD to your handler
 CMD [ "lambda_function.handler" ]
 
+
+
 #docker build --platform linux/amd64 -t docker-image:test .
 #docker run -v  C:\Users\John\Desktop\DockerMount:/mountedvolume -p 8080:8080 docker-image:test .
-
-#pip install --upgrade python-docx
-#pip install PyMuPDF
