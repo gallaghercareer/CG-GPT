@@ -36,6 +36,9 @@ RUN ~/miniconda3/bin/conda init bash
 # Upgrade pip
 RUN ~/miniconda3/bin/pip install --upgrade pip
 
+#Update Python doc-x
+RUNpip install --upgrade python-docx
+
 # Install the specified Python packages
 RUN pip install -r requirements.txt
 
