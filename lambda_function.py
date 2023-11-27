@@ -31,6 +31,9 @@ def create_counting_doc(docx_file, text_to_count):
 
 # Convert the DOCX to a PDF
 def convert_to_pdf(docx_file):
+       # Set HOME environment variable to /tmp
+    os.environ['HOME'] = '/tmp'
+
     # Command to run soffice for conversion
     command = [
         "soffice", 
@@ -40,8 +43,17 @@ def convert_to_pdf(docx_file):
         "--outdir", "/tmp/"
     ]
 
-    # Execute the command
-    subprocess.run(command, check=True)
+    # Try executing the command, with a retry on failure
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            subprocess.run(command, check=True)
+            break  # If successful, break out of the loop
+        except subprocess.CalledProcessError as e:
+            if attempt < max_retries - 1:  # Retry if not the last attempt
+                continue
+            else:
+                raise  # Re-raise the exception if out of retries
 
 def count_lines_in_pdf(pdf_file):
     with fitz.open(pdf_file) as doc:

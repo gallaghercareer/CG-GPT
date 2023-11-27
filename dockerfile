@@ -22,7 +22,7 @@ RUN yum update -y && \
     libcairo2 \
     cairo \
     cups-libs
-
+ 
 # Download and install LibreOffice
 RUN wget https://mirrors.iu13.net/tdf/libreoffice/stable/7.6.3/rpm/x86_64/LibreOffice_7.6.3_Linux_x86-64_rpm.tar.gz && \
     tar -xvf LibreOffice_7.6.3_Linux_x86-64_rpm.tar.gz && \
