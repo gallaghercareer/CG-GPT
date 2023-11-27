@@ -3,6 +3,7 @@ import os
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import Pt
 import subprocess
+import json
 import fitz  # PyMuPD
 
 # Create a PDF with only the text you want to count
@@ -36,7 +37,7 @@ def convert_to_pdf(docx_file):
         "--headless", 
         "--convert-to", "pdf", 
         docx_file,
-        "--outdir", "/mountedvolume/"
+        "--outdir", "/tmp/"
     ]
 
     # Execute the command
@@ -67,11 +68,12 @@ def handler(event, context):
         # Count lines in the PDF
         line_count = count_lines_in_pdf(temp_pdf_file)
         
-        # Return the line count as the response
+         # Return the line count as the response
         return {
-            'statusCode': 200,
-            'body': str(line_count)
+            'statusCode' : 200,
+            'line_count': line_count
         }
+        
     except Exception as e:
         return {
             'statusCode': 500,
