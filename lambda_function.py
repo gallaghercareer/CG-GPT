@@ -67,7 +67,7 @@ def count_lines_in_pdf(pdf_file):
 def handler(event, context):
     try:
         # Extract the text to count from the API Gateway event
-        text_to_count = event['body']
+        text_to_count = event['paragraph']
         
         # Create a temporary DOCX file with the provided text
         temp_docx_file = "/tmp/CountingDoc.docx"
@@ -79,15 +79,17 @@ def handler(event, context):
         
         # Count lines in the PDF
         line_count = count_lines_in_pdf(temp_pdf_file)
-        
+        str(line_count)
          # Return the line count as the response
         return {
-            'statusCode' : 200,
-            'line_count': line_count
+                "isBase64Encoded":False,
+                "statusCode": 200,
+                "headers": { "Content-Type": "application/json"},
+                "linecount": line_count            
         }
         
     except Exception as e:
         return {
             'statusCode': 500,
-            'body': str(e)
+            'errorMessage': str(e)
         }
