@@ -1,3 +1,5 @@
+FROM public.ecr.aws/lambda/provided:al2023.2023.11.18.01
+
 FROM public.ecr.aws/lambda/python:3.11
 
 # Install system packages, including build essentials
@@ -29,20 +31,14 @@ RUN wget https://mirrors.iu13.net/tdf/libreoffice/stable/7.6.3/rpm/x86_64/LibreO
 
 ENV PATH="${PATH}:/opt/libreoffice7.6/program/"
 
-WORKDIR /var/task
-
 # Copy requirements.txt
 COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
-# Install the specified Python packages
-RUN pip install --upgrade python-docx
+# Install the specified packages
 RUN pip install -r requirements.txt
 
 # Copy function code
 COPY lambda_function.py ${LAMBDA_TASK_ROOT}
 
-# Set the CMD to your handler
+# Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
 CMD [ "lambda_function.handler" ]
-
-#docker build --platform linux/amd64 -t docker-image:test .
-#docker run -v  C:\Users\John\Desktop\DockerMount:/mountedvolume -p 8080:8080 docker-image:test .
