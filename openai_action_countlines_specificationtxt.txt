@@ -1,90 +1,91 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "Test Function API",
-    "description": "Executes a test function with a given input.",
-    "version": "v1.0.0"
-  },
-  "servers": [
-    {
-      "url": "https://joi8699xag.execute-api.us-east-2.amazonaws.com/POST-API-GATEWAY"
-    }
-  ],
-  "paths": {
-    "/testfunc": {
-      "post": {
-        "description": "Executes the test function with the provided paragraph.",
-        "operationId": "ExecuteTestFunction",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "paragraph": {
-                    "type": "string",
-                    "description": "The paragraph to process."
-                  }
-                },
-                "required": ["paragraph"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response with the line count.",
+    "openapi": "3.1.0",
+    "info": {
+      "title": "countLines",
+      "description": "Counts the lines of the text sent to it",
+      "version": "v1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://joi8699xag.execute-api.us-east-2.amazonaws.com/POST-API-GATEWAY"
+      }
+    ],
+    "paths": {
+      "/testfunc": {
+        "post": {
+          "description": "Counts the lines of the text sent to it",
+          "operationId": "countLines",
+          "requestBody": {
+            "required": true,
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "isBase64Encoded": {
-                      "type": "boolean"
-                    },
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "headers": {
-                      "type": "object",
-                      "properties": {
-                        "Content-Type": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "body": {
+                    "paragraph": {
                       "type": "string",
-                      "description": "The processed response."
+                      "description": "The paragraph to count the lines."
                     }
-                  }
+                  },
+                  "required": ["paragraph"]
                 }
               }
             }
           },
-          "500": {
-            "description": "Error response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "statusCode": {
-                      "type": "integer"
-                    },
-                    "body": {
-                      "type": "string",
-                      "description": "Error message."
-                    },
-                    "isBase64Encoded": {
-                      "type": "boolean"
-                    },
-                    "headers": {
-                      "type": "object",
-                      "properties": {
-                        "Content-Type": {
-                          "type": "string"
+          "responses": {
+            "200": {
+              "description": "Successful response with the line count.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "isBase64Encoded": {
+                        "type": "boolean"
+                      },
+                      "statusCode": {
+                        "type": "integer"
+                      },
+                      "headers": {
+                        "type": "object",
+                        "properties": {
+                          "Content-Type": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "body": {
+                        "type": "string",
+                        "description": "The processed response."
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Error response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "statusCode": {
+                        "type": "integer"
+                      },
+                      "body": {
+                        "type": "string",
+                        "description": "Error message."
+                      },
+                      "isBase64Encoded": {
+                        "type": "boolean"
+                      },
+                      "headers": {
+                        "type": "object",
+                        "properties": {
+                          "Content-Type": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
@@ -95,9 +96,8 @@
           }
         }
       }
+    },
+    "components": {
+      "schemas": {}
     }
-  },
-  "components": {
-    "schemas": {}
   }
-}
