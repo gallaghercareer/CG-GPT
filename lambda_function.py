@@ -66,9 +66,10 @@ def count_lines_in_pdf(pdf_file):
     
 def handler(event, context):
     try:
-        # Extract the text to count from the API Gateway event
-        text_to_count = event['paragraph']
-        
+
+        body = json.loads(event['body'])
+        text_to_count = body['paragraph']
+
         # Create a temporary DOCX file with the provided text
         temp_docx_file = "/tmp/CountingDoc.docx"
         create_counting_doc(temp_docx_file, text_to_count)
@@ -79,17 +80,28 @@ def handler(event, context):
         
         # Count lines in the PDF
         line_count = count_lines_in_pdf(temp_pdf_file)
-        str(line_count)
-         # Return the line count as the response
+        
+
+        # Convert the line count to a string and embed in a JSON structure
+        response_body = {
+            "line_count": line_count,           
+        }
+            # Return the line count as the response
         return {
-                "isBase64Encoded":False,
-                "statusCode": 200,
-                "headers": { "Content-Type": "application/json"},
-                "linecount": line_count            
+            "isBase64Encoded": False,
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": json.dumps(response_body)           
         }
         
     except Exception as e:
+        # Correctly format the error response according to Lambda proxy integration requirements
+        error_response = {
+            "errorMessage": str(e)
+        }
         return {
             'statusCode': 500,
-            'errorMessage': str(e)
+            'body': json.dumps(error_response),
+            "isBase64Encoded": False,
+            "headers": { "Content-Type": "application/json" }
         }
