@@ -111,11 +111,20 @@ async def async_handler(event, context, thread_id):
             #"log_contents": log_contents           
         }
         
+        headers = {
+            "Access-Control-Allow-Headers" : "Content-Type, Authorization" ,
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS, POST"
+            
+
+        }
         # Return the line count as the response
         return {
+            
             "isBase64Encoded": False,
             "statusCode": 200,
-            "headers": { "Content-Type": "application/json" },
+            "headers": headers,
             "body": json.dumps(response_body)           
         }
         
@@ -130,7 +139,7 @@ async def async_handler(event, context, thread_id):
             'statusCode': 500,
             'body': json.dumps(error_response),
             "isBase64Encoded": False,
-            "headers": { "Content-Type": "application/json" }
+            "headers": headers
         }
 
 def handler(event, context):
