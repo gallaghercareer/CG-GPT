@@ -98,19 +98,6 @@ async def run_assistant(thread_id, assistant_id):
 
 async def async_handler(event, context, thread_id):    
     try:       
-           
-        #assitant's response to the thread session
-        message = await run_assistant(thread_id, assistant_id)
-
-        print(message)
-        first_ai_message = message[0].content[0].text.value
-
-        response_body = {
-            "assistant_response": first_ai_message,
-            "thread_id" : thread_id,
-            #"log_contents": log_contents           
-        }
-        
         headers = {
             "Access-Control-Allow-Headers" : "Content-Type, Authorization" ,
             "Content-Type": "application/json",
@@ -118,7 +105,23 @@ async def async_handler(event, context, thread_id):
             "Access-Control-Allow-Methods": "OPTIONS, POST"
             
 
+        }    
+        #assitant's response to the thread session
+        message = await run_assistant(thread_id, assistant_id)
+
+        print(message)
+        first_ai_message = message[0].content[0].text.value
+        print(message[0].thread_id)
+        if (len(thread_id) < 0):
+            thread_id  = message[0].thread_id
+        
+        response_body = {
+            "assistant_response": first_ai_message,
+            "thread_id" : thread_id,
+            #"log_contents": log_contents           
         }
+        
+     
         # Return the line count as the response
         return {
             
