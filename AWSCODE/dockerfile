@@ -1,3 +1,5 @@
+#This dockerfile is the full file used on AWS ECR
+
 FROM public.ecr.aws/lambda/provided:al2023.2023.11.18.01
 
 FROM public.ecr.aws/lambda/python:3.11

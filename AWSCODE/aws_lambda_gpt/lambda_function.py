@@ -1,4 +1,5 @@
 
+#This lambda communicates with the chatgpt api bot
 import json
 import openai
 import os

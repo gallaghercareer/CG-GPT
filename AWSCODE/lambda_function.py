@@ -1,3 +1,5 @@
+#This lambda is used in the containerized lambda function. It is used when the user finalizes and submits the written letter. It will return the # of lines in the pdf. 
+
 import docx
 import os
 from docx.enum.text import WD_ALIGN_PARAGRAPH
